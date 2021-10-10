@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import toast from 'react-hot-toast';
+
+import { addContact } from 'redux/contacts/contacts-actions';
 
 import css from './ContactForm.module.css';
 
-export default function ContactForm({ onSubmit }) {
+function ContactForm({ contacts, onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -28,6 +32,16 @@ export default function ContactForm({ onSubmit }) {
 
   const handleSubmit = event => {
     event.preventDefault();
+
+    const doubleContact = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase(),
+    );
+
+    if (doubleContact) {
+      toast.error(`${name} is alredy in contacts.`);
+      return;
+    }
+
     onSubmit({ name, number });
     reset();
   };
@@ -72,6 +86,16 @@ export default function ContactForm({ onSubmit }) {
   );
 }
 
+const mapStateToProps = state => ({
+  contacts: state.contacts.items,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: data => dispatch(addContact(data)),
+});
+
 ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

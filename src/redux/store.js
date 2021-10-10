@@ -1,10 +1,12 @@
-import { createStore } from 'redux';
+// Без использования React Toolkit
+import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { contactsReducer } from './contacts/contacts-reducer';
 
-const reducer = (state = {}, action) => {
-  console.log('Log of action in reducer', action);
-  return state;
-};
+const rootReducer = combineReducers({
+  contacts: contactsReducer,
+});
 
-const store = createStore(reducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;

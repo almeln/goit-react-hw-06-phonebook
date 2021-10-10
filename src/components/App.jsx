@@ -8,121 +8,102 @@ import Container from './Container';
 import Filter from './Filter';
 
 export default function App() {
-    const [contacts, setContacts] = useState([
-        {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-        {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-        {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-        {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ]);
+    // const [contacts, setContacts] = useState([
+    //     {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+    //     {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    //     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    //     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+    // ]);
 
-    const [filter, setFilter] = useState('');
+    // const [filter, setFilter] = useState('');
 
-    useEffect(() => {
-        const contacts = localStorage.getItem('contacts');
-        const parsedContacts = JSON.parse(contacts);
-        if (parsedContacts) {
-            console.log(parsedContacts);
-            setContacts(parsedContacts);
-        };
-    }, []);
+    // useEffect(() => {
+    //     const contacts = localStorage.getItem('contacts');
+    //     const parsedContacts = JSON.parse(contacts);
+    //     if (parsedContacts) {
+    //         console.log(parsedContacts);
+    //         setContacts(parsedContacts);
+    //     };
+    // }, []);
 
-    useEffect(() => {
-        localStorage.setItem('contacts', JSON.stringify(contacts));
-    }, [contacts]);
+    // useEffect(() => {
+    //     localStorage.setItem('contacts', JSON.stringify(contacts));
+    // }, [contacts]);
 
-    const formSubmitHandler = (data) => {
-        // Добавление контакта
-        const contact = {
-            id: uuidv4(),
-            name: data.name,
-            number: data.number,
-        };
+    // const formSubmitHandler = (data) => {
+    //     // Добавление контакта
+    //     const contact = {
+    //         id: uuidv4(),
+    //         name: data.name,
+    //         number: data.number,
+    //     };
 
-        // Проверка на дублирование имени
-        const doubleContact = contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
+    //     // Проверка на дублирование имени
+    //     const doubleContact = contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
         
-        if (doubleContact) {
-            toast.error(`${data.name} is alredy in contacts.`);
-            return;
-        };
+    //     if (doubleContact) {
+    //         toast.error(`${data.name} is alredy in contacts.`);
+    //         return;
+    //     };
 
-        setContacts([contact, ...contacts]);
-    };
+    //     setContacts([contact, ...contacts]);
+    // };
 
-    const changeFilter = event => {
-        setFilter(event.currentTarget.value);
-    };
+    // const changeFilter = event => {
+    //     setFilter(event.currentTarget.value);
+    // };
 
-    const getVisibleContacts = () => {
-        const normalizedFilter = filter.toLowerCase();
-        return contacts.filter(contact =>
-            contact.name.toLowerCase().includes(normalizedFilter),
-        );
-    };
+    // const getVisibleContacts = () => {
+    //     const normalizedFilter = filter.toLowerCase();
+    //     return contacts.filter(contact =>
+    //         contact.name.toLowerCase().includes(normalizedFilter),
+    //     );
+    // };
 
-    const deleteContact = (contactId) => {
-        setContacts(contacts.filter(contact => contact.id !== contactId));
-    };
+    // const deleteContact = (contactId) => {
+    //     setContacts(contacts.filter(contact => contact.id !== contactId));
+    // };
 
     return (
         <Container>
             <Toaster/>
             <h1>Phonebook</h1>
-            <ContactForm onSubmit={formSubmitHandler}></ContactForm>
+            <ContactForm></ContactForm>
+            {/* <ContactForm onSubmit={formSubmitHandler}></ContactForm> */}
             <h2>Contacts</h2>
-            <Filter value={filter} onChange={changeFilter}></Filter>
-            <ContactList 
-                contacts={getVisibleContacts()}
-                onDeleteContact={deleteContact}
-            ></ContactList>
+            <Filter></Filter>
+            <ContactList></ContactList>
         </Container>
     )
 }
 
-// class App1 extends Component {
-//     state = {
-//         contacts: [
-//             {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
-//             {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
-//             {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
-//             {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-//         ],
-//         filter: ''
-//     }
 
-//     // Фазы жизненного цикла
-//     componentDidMount() {
-//         console.log('App componentDidMount');
 
+
+// export default function App() {
+//     const [contacts, setContacts] = useState([
+//         {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+//         {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+//         {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+//         {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+//     ]);
+
+//     const [filter, setFilter] = useState('');
+
+//     useEffect(() => {
 //         const contacts = localStorage.getItem('contacts');
 //         const parsedContacts = JSON.parse(contacts);
-
 //         if (parsedContacts) {
 //             console.log(parsedContacts);
-//             this.setState({ contacts: parsedContacts });
+//             setContacts(parsedContacts);
 //         };
-//     };
+//     }, []);
 
-//     // Фазы жизненного цикла
-//     componentDidUpdate(prevProps, prevState) {
-//         const { contacts } = this.state;
+//     useEffect(() => {
+//         localStorage.setItem('contacts', JSON.stringify(contacts));
+//     }, [contacts]);
 
-//         console.log('App componentDidUpdate');
-//         // До обновления
-//         console.log('prevState', prevState);
-//         // После обновления
-//         console.log('state', this.state);
-
-//         if (contacts !== prevState.contacts) {
-//             console.log('Обновилось поле контактов, записываю контакты в хранилище');
-
-//             localStorage.setItem('contacts', JSON.stringify(contacts));
-//         };
-//     }
-
-//     formSubmitHandler = data => {
-//         console.log(data);
-
+//     const formSubmitHandler = (data) => {
 //         // Добавление контакта
 //         const contact = {
 //             id: uuidv4(),
@@ -131,64 +112,43 @@ export default function App() {
 //         };
 
 //         // Проверка на дублирование имени
-//         const doubleContact = this.state.contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
+//         const doubleContact = contacts.find(contact => contact.name.toLowerCase() === data.name.toLowerCase());
         
 //         if (doubleContact) {
-//             // alert(`${data.name} is alredy in contacts.`);
 //             toast.error(`${data.name} is alredy in contacts.`);
 //             return;
 //         };
 
-//         // this.setState(prevState => ({
-//         //     contacts: [contact, ...prevState.contacts]
-//         // }));
-
-//         // Деструктуризация
-//         this.setState(({ contacts }) => ({
-//             contacts: [contact, ...contacts]
-//         }));
+//         setContacts([contact, ...contacts]);
 //     };
 
-//     changeFilter = event => {
-//         this.setState({filter: event.currentTarget.value});
+//     const changeFilter = event => {
+//         setFilter(event.currentTarget.value);
 //     };
 
-//     getVisibleContacts = () => {
-//         const { filter, contacts } = this.state;
-
+//     const getVisibleContacts = () => {
 //         const normalizedFilter = filter.toLowerCase();
 //         return contacts.filter(contact =>
 //             contact.name.toLowerCase().includes(normalizedFilter),
 //         );
 //     };
 
-//     deleteContact = contactId => {
-//         this.setState(prevState => ({
-//             contacts: prevState.contacts.filter(contact => contact.id !== contactId)
-//         }));
+//     const deleteContact = (contactId) => {
+//         setContacts(contacts.filter(contact => contact.id !== contactId));
 //     };
 
-//     render() {
-//         const { formSubmitHandler, changeFilter, deleteContact, getVisibleContacts } = this;
-//         const visibleContacts = getVisibleContacts();
+//     return (
+//         <Container>
+//             <Toaster/>
+//             <h1>Phonebook</h1>
+//             <ContactForm onSubmit={formSubmitHandler}></ContactForm>
+//             <h2>Contacts</h2>
+//             <Filter value={filter} onChange={changeFilter}></Filter>
+//             <ContactList 
+//                 contacts={getVisibleContacts()}
+//                 onDeleteContact={deleteContact}
+//             ></ContactList>
+//         </Container>
+//     )
+// }
 
-//         // Фазы жизненного цикла
-//         console.log('App render');
-
-//         return (
-//             <Container>
-//                 <Toaster/>
-//                 <h1>Phonebook</h1>
-//                 <ContactForm onSubmit={formSubmitHandler}></ContactForm>
-//                 <h2>Contacts</h2>
-//                 <Filter value={this.state.filter} onChange={changeFilter}></Filter>
-//                 <ContactList 
-//                     contacts={visibleContacts}
-//                     onDeleteContact={deleteContact}
-//                 ></ContactList>
-//             </Container>
-//         )
-//     }
-// };
-
-// export default App;
