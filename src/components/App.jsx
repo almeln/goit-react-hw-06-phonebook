@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import toast, { Toaster } from 'react-hot-toast';
+import React from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
