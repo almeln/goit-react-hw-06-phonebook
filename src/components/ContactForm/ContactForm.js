@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 
 import { addContact } from 'redux/contacts/contacts-actions';
+import { getItems } from 'redux/contacts/contacts-selectors';
 
 import css from './ContactForm.module.css';
 
-function ContactForm({ contacts, onSubmit }) {
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  // useSelector вместо mapStateToProps
+  const contacts = useSelector(getItems);
+
+  const dispatch = useDispatch();
 
   console.log(name);
 
@@ -42,7 +48,8 @@ function ContactForm({ contacts, onSubmit }) {
       return;
     }
 
-    onSubmit({ name, number });
+    dispatch(addContact({ name, number }));
+    // onSubmit({ name, number });
     reset();
   };
 
@@ -86,16 +93,16 @@ function ContactForm({ contacts, onSubmit }) {
   );
 }
 
-const mapStateToProps = state => ({
-  contacts: state.contacts.items,
-});
+// const mapStateToProps = state => ({
+//   contacts: state.contacts.items,
+// });
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: data => dispatch(addContact(data)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   onSubmit: data => dispatch(addContact(data)),
+// });
 
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// ContactForm.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
